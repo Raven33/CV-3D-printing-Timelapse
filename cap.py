@@ -16,12 +16,12 @@ while(True):
     i = 0
     best_s = 0
     while(i<=number):
-    i += 1
-    ret, frame = cap.read()
-    s = ssim(frame, previous, multichannel=True)
-    if(s > best_s):
-        best_s = s
-        best_frame = frame
+        i += 1
+        ret, frame = cap.read()
+        s = ssim(frame, previous, multichannel=True)
+        if(s > best_s):
+            best_s = s
+            best_frame = frame
     cv2.imwrite('folder/%d.png' % file,best_frame)
     file += 1
     pbar.update(1)
