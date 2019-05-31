@@ -1,7 +1,8 @@
 from tqdm import tqdm
 import numpy as np
 import cv2
-from skimage.measure import compare_ssim as ssim
+import ssim
+from PIL import Image
 import time
  
 cap = cv2.VideoCapture('video.mp4')
@@ -18,7 +19,12 @@ while(True):
     while(i<=number):
         i += 1
         ret, frame = cap.read()
-        s = ssim(frame, previous, multichannel=True)
+        fr = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        fr = Image.fromarray(fr)
+
+        prev = cv2.cvtColor(previous, cv2.COLOR_BGR2RGB)
+        prev = Image.fromarray(prev)
+        s = ssim.compute_ssim(fr, prev, gaussian_kernel_sigma=1.5, gaussian_kernel_width=11)
         if(s > best_s):
             best_s = s
             best_frame = frame
@@ -30,4 +36,3 @@ while(True):
 pbar.close()
 cap.release()
 cv2.destroyAllWindows()
-#this is a dummy comment
