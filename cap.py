@@ -35,7 +35,7 @@ class Worker(Process):
         for frame in iter(self.queue.get, None):
             f = Frame()
             f.index = frame.index
-            fr = cv2.cvtColor(cv2.resize(frame.frame, (0, 0), fx=0.5, fy=0.5), cv2.COLOR_BGR2RGB)
+            fr = cv2.cvtColor(cv2.resize(frame.frame, (int(frame.frame.shape[0]/2),int(frame.frame.shape[1]/2)), interpolation = cv2.INTER_AREA), cv2.COLOR_BGR2RGB)
             fr = Image.fromarray(fr)
             f.frame = ssim.compute_ssim(fr, self.prev, gaussian_kernel_sigma=1.5, gaussian_kernel_width=11)
             self.result.put(f)
@@ -46,7 +46,7 @@ def testpool(prev, Frames):
     result = Queue()
     results = []
     Processes = []
-    prev = cv2.cvtColor(cv2.resize(prev, (0, 0), fx=0.5, fy=0.5), cv2.COLOR_BGR2RGB)
+    prev = cv2.cvtColor(cv2.resize(prev, (int(prev.shape[0]/2),int(prev.shape[1]/2)), interpolation = cv2.INTER_AREA), cv2.COLOR_BGR2RGB)
     prev = Image.fromarray(prev)
     for i in range(12):
         Processes.append(Worker(prev, request_queue, result))
