@@ -19,10 +19,10 @@ while(True):
     while(i<=number):
         i += 1
         ret, frame = cap.read()
-        fr = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        fr = cv2.cvtColor(cv2.resize(frame, (int(frame.shape[0]/2),int(frame.shape[1]/2)), interpolation = cv2.INTER_AREA), cv2.COLOR_BGR2RGB)
         fr = Image.fromarray(fr)
 
-        prev = cv2.cvtColor(previous, cv2.COLOR_BGR2RGB)
+        prev = cv2.cvtColor(cv2.resize(previous, (int(previous.shape[0]/2),int(previous.shape[1]/2)), interpolation = cv2.INTER_AREA), cv2.COLOR_BGR2RGB)
         prev = Image.fromarray(prev)
         s = ssim.compute_ssim(fr, prev, gaussian_kernel_sigma=1.5, gaussian_kernel_width=11)
         if(s > best_s):
