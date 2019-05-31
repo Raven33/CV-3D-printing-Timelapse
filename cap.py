@@ -9,14 +9,15 @@ cap = cv2.VideoCapture('video.mp4')
  
 ret,previous = cap.read()
 length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+advancement = cap.get(cv2.CAP_PROP_POS_FRAMES)
 best_frame = previous
 number = 50
 file = 0
 pbar = tqdm(total=int(length/50),ascii=True)
-while(True):
+while(advancement<length):
     i = 0
     best_s = 0
-    while(i<=number):
+    while(i<Blocsize and advancement<length):
         i += 1
         ret, frame = cap.read()
         fr = cv2.cvtColor(cv2.resize(frame, (int(frame.shape[0]/2),int(frame.shape[1]/2)), interpolation = cv2.INTER_AREA), cv2.COLOR_BGR2RGB)
