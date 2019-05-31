@@ -13,7 +13,7 @@ file = 0
 
 path = source.split(".")[0]
 
-cap = cv2.VideoCapture(source)  # Pick a source - either a file or a (exiting) device
+cap = cv2.VideoCapture(source)
 ret, previous = cap.read()
 length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 advancement = cap.get(cv2.CAP_PROP_POS_FRAMES)
