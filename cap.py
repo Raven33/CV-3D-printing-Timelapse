@@ -1,7 +1,8 @@
 from tqdm import tqdm
 import numpy as np
 import cv2
-import ssim
+from SSIM_PIL import compare_ssim
+import pyopencl
 from PIL import Image
 import time
  
@@ -25,7 +26,7 @@ while(advancement<length):
 
         prev = cv2.cvtColor(cv2.resize(previous, (int(previous.shape[0]/2),int(previous.shape[1]/2)), interpolation = cv2.INTER_AREA), cv2.COLOR_BGR2RGB)
         prev = Image.fromarray(prev)
-        s = ssim.compute_ssim(fr, prev, gaussian_kernel_sigma=1.5, gaussian_kernel_width=11)
+        s = compare_ssim(prev, fr)
         if(s > best_s):
             best_s = s
             best_frame = frame
