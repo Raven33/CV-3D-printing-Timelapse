@@ -12,7 +12,7 @@ ret,previous = cap.read()
 length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 advancement = cap.get(cv2.CAP_PROP_POS_FRAMES)
 best_frame = previous
-number = 50
+Blocsize = 50
 file = 0
 pbar = tqdm(total=int(length/50),ascii=True)
 while(advancement<length):
